@@ -5,14 +5,14 @@ A collection of PHPStan rules to enforce best practices and standards in databas
 ## Installation
 
 ```bash
-composer require --dev your-vendor/phpstan-migration-rules
+composer require --dev bellangelo/phpstan-migration-rules
 ```
 
 The extension will be automatically registered if you have `phpstan/extension-installer` installed. Otherwise, add it manually to your `phpstan.neon`:
 
 ```neon
 includes:
-    - vendor/your-vendor/phpstan-migration-rules/extension.neon
+    - vendor/bellangelo/phpstan-migration-rules/extension.neon
 ```
 
 ## Rules
