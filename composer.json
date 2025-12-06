@@ -1,0 +1,38 @@
+{
+    "name": "bellangelo/phpstan-migration-rules",
+    "description": "PHPStan rules for database migration tools (Phinx, Symfony, Laravel)",
+    "type": "phpstan-extension",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4|^8.0",
+        "phpstan/phpstan": "^1.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5|^10.0",
+        "robmorgan/phinx": "^0.13"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "docker:shell": "docker run --rm --interactive --tty --volume $PWD:/app composer /bin/sh"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpStanMigrationRules\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpStanMigrationRules\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
+
