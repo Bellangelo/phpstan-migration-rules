@@ -10,6 +10,7 @@ final class TableWithNonArrayOptions extends AbstractMigration
 {
     public function change(): void
     {
+        /** @phpstan-ignore argument.type */
         $this->table('users', 'not-an-array');
     }
 }

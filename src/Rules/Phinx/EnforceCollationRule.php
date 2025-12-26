@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpStanMigrationRules\Rules\Phinx;
 
 use PhpParser\Node;
+use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\MethodCall;
@@ -12,6 +13,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\Constant\ConstantStringType;
+use PHPStan\Rules\IdentifierRuleError;
 
 /**
  * @implements Rule<MethodCall>
@@ -32,10 +34,6 @@ class EnforceCollationRule implements Rule
 
     public function processNode(Node $node, Scope $scope): array
     {
-        if (!$node instanceof MethodCall) {
-            return [];
-        }
-
         $methodName = $node->name instanceof Node\Identifier ? $node->name->toString() : null;
         if ($methodName === null) {
             return [];
@@ -59,6 +57,9 @@ class EnforceCollationRule implements Rule
         return [];
     }
 
+    /**
+     * @return list<IdentifierRuleError>
+     */
     private function validateTableMethod(MethodCall $node, Scope $scope): array
     {
         // Check if the table method has the required collation option
@@ -71,7 +72,9 @@ class EnforceCollationRule implements Rule
                         'Phinx table() method must specify collation. Expected collation: "%s"',
                         $this->requiredCollation
                     )
-                )->line($node->getStartLine())->build(),
+                )->line($node->getStartLine())
+                ->identifier('phinx.table.missing_collation')
+                ->build(),
             ];
         }
 
@@ -84,7 +87,9 @@ class EnforceCollationRule implements Rule
                         'Phinx table() method options must be an array with collation set to "%s"',
                         $this->requiredCollation
                     )
-                )->line($node->getStartLine())->build(),
+                )->line($node->getStartLine())
+                ->identifier('phinx.table.options_not_array')
+                ->build(),
             ];
         }
 
@@ -93,7 +98,7 @@ class EnforceCollationRule implements Rule
         $collationValue = null;
 
         foreach ($optionsArg->items as $item) {
-            if ($item === null || !$item instanceof ArrayItem || $item->key === null) {
+            if ($item->key === null) {
                 continue;
             }
 
@@ -113,7 +118,9 @@ class EnforceCollationRule implements Rule
                         'Phinx table() method must specify collation option. Expected: "%s"',
                         $this->requiredCollation
                     )
-                )->line($node->getStartLine())->build(),
+                )->line($node->getStartLine())
+                ->identifier('phinx.table.missing_collation')
+                ->build(),
             ];
         }
 
@@ -125,7 +132,9 @@ class EnforceCollationRule implements Rule
                         $this->requiredCollation,
                         $collationValue
                     )
-                )->line($node->getStartLine())->build(),
+                )->line($node->getStartLine())
+                ->identifier('phinx.table.wrong_collation')
+                ->build(),
             ];
         }
 
@@ -135,14 +144,14 @@ class EnforceCollationRule implements Rule
     /**
      * Extract string value from a node, using PHPStan's type system to resolve constants
      */
-    private function getStringValue(Node $node, Scope $scope): ?string
+    private function getStringValue(Expr $node, Scope $scope): ?string
     {
         $type = $scope->getType($node);
-        if ($type instanceof ConstantStringType) {
-            return $type->getValue();
+        
+        if (count($type->getConstantStrings()) === 0) {
+            return null;
         }
-
-        return null;
+        
+        return $type->getConstantStrings()[0]->getValue();
     }
 }
-

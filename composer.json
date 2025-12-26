@@ -4,15 +4,16 @@
     "type": "phpstan-extension",
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
-        "phpstan/phpstan": "^1.9"
+        "php": "^7.4|^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5|^10.0",
-        "robmorgan/phinx": "^0.13"
+        "robmorgan/phinx": "^0.13",
+        "phpstan/phpstan": "^2.1"
     },
     "scripts": {
         "test": "phpunit",
+        "phpstan": "phpstan analyse",
         "docker:shell": "docker run --rm --interactive --tty --volume $PWD:/app composer /bin/sh"
     },
     "autoload": {
@@ -35,4 +36,3 @@
     "minimum-stability": "stable",
     "prefer-stable": true
 }
-

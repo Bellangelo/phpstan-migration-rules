@@ -14,6 +14,10 @@ final class NonMigrationClass
         ]);
     }
 
+    /**
+     * @param string $name
+     * @param array<string, mixed> $options
+     */
     private function table(string $name, array $options = []): void
     {
         // local helper, not Phinx
