@@ -9,11 +9,14 @@
     "require-dev": {
         "phpunit/phpunit": "^9.5|^10.0",
         "robmorgan/phinx": "^0.13",
-        "phpstan/phpstan": "^2.1"
+        "phpstan/phpstan": "^2.1",
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "scripts": {
         "test": "phpunit",
         "phpstan": "phpstan analyse",
+        "cs": "phpcs",
+        "cs:fix": "phpcbf",
         "docker:shell": "docker run --rm --interactive --tty --volume $PWD:/app composer /bin/sh"
     },
     "autoload": {
