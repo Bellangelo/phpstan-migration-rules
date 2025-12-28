@@ -20,8 +20,10 @@ use PHPStan\Rules\IdentifierRuleError;
  */
 class EnforceCollationRule implements Rule
 {
-    public function __construct(private string $requiredCollation = 'utf8')
+    private string $requiredCollation = 'utf8';
+    public function __construct(string $requiredCollation = 'utf8')
     {
+        $this->requiredCollation = $requiredCollation;
     }
 
     public function getNodeType(): string
