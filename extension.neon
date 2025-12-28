@@ -1,12 +1,19 @@
+parametersSchema:
+    phpstanMigrationRules: structure([
+        phinx: structure([
+            requiredCollation: string()
+        ])
+    ])
+
 parameters:
-  phpstanMigrationRules:
-    phinx:
-      requiredCollation: utf8
+    phpstanMigrationRules:
+        phinx:
+            requiredCollation: utf8
 
 services:
-  -
-    class: PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule
-    arguments:
-      requiredCollation: %phpstanMigrationRules.phinx.requiredCollation%
-    tags:
-      - phpstan.rules.rule
+    -
+        class: PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule
+        arguments:
+            requiredCollation: %phpstanMigrationRules.phinx.requiredCollation%
+        tags:
+            - phpstan.rules.rule
