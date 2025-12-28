@@ -43,7 +43,11 @@ final class EnforceCollationRuleTest extends RuleTestCase
             [
                 [
                     'Phinx table() method options must be an array with collation set to "utf8"',
-                    13,
+                    14,
+                ],
+                [
+                    'No error with identifier argument.type is reported on line 14.',
+                    14
                 ],
             ]
         );
