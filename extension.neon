@@ -1,8 +1,12 @@
-services:
-    -
-        class: PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule
-        arguments:
-            requiredCollation: 'utf8'
-        tags:
-            - phpstan.rules.rule
+parameters:
+  phpstanMigrationRules:
+    phinx:
+      requiredCollation: utf8
 
+services:
+  -
+    class: PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule
+    arguments:
+      requiredCollation: %phpstanMigrationRules.phinx.requiredCollation%
+    tags:
+      - phpstan.rules.rule
