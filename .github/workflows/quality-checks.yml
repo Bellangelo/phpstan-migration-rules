@@ -1,8 +1,7 @@
 name: PR Quality
 
 on:
-  push:
-    ["**"]
+  push: ["**"]
   pull_request:
     branches: ["**"]
 
