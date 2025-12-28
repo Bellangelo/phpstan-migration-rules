@@ -4,3 +4,7 @@
 /phpcs.xml export-ignore
 /phpstan.neon export-ignore
 /phpunit.xml export-ignore
+/rector.php export-ignore
+/rector-downgrade.php export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
