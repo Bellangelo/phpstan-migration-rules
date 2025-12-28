@@ -1,0 +1,49 @@
+name: PR Quality
+
+on:
+  pull_request:
+    branches: ["**"]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["7.4", "8.0", "8.1", "8.2", "8.3", "8.4", "8.5"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Rector downgrade
+        if: matrix.php != '8.5'
+        run: composer run rector:downgrade
+
+      - name: PHPStan
+        run: composer run phpstan -- --error-format=checkstyle | vendor/bin/cs2pr
+
+      - name: PHPUnit
+        run: composer run test
+
+      - name: PHPCS
+        run: composer run cs -- --report=checkstyle | vendor/bin/cs2pr
+
+      - name: Validate latest PHP standards
+        if: matrix.php == '8.5'
+        run: composer run rector:dry-run

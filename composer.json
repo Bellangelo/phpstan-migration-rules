@@ -11,13 +11,17 @@
         "robmorgan/phinx": "^0.13",
         "phpstan/phpstan": "^2.1",
         "squizlabs/php_codesniffer": "^4.0",
-        "rector/rector": "^2.3"
+        "rector/rector": "^2.3",
+        "staabm/annotate-pull-request-from-checkstyle": "^1.8"
     },
     "scripts": {
         "test": "phpunit",
         "phpstan": "phpstan analyse",
         "cs": "phpcs",
         "cs:fix": "phpcbf",
+        "rector": "rector process --config rector.php",
+        "rector:dry-run": "rector process --config rector.php --dry-run",
+        "rector:downgrade": "rector process --config rector-downgrade.php",
         "docker:shell": "docker run --rm --interactive --tty --volume $PWD:/app composer /bin/sh"
     },
     "autoload": {
