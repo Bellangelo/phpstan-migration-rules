@@ -42,7 +42,7 @@ class EnforceCollationRule implements Rule
             return [];
         }
 
-        if (!$classReflection->isSubclassOf('Phinx\Migration\AbstractMigration')) {
+        if (!$classReflection->isSubclassOf(\Phinx\Migration\AbstractMigration::class)) {
             return [];
         }
 
