@@ -21,6 +21,14 @@ includes:
 
 - **[EnforceCollationRule](src/Rules/Phinx/EnforceCollationRule.php)** - Enforces that all Phinx `table()` method calls specify a collation (default: `utf8`)
 
+    #### Configuration example:
+    ```yaml
+    parameters:
+        phpstanMigrationRules:
+            phinx:
+                requiredCollation: utf8mb4
+    ```
+
 ### Laravel
 
 Rules for Laravel Migrations are coming soon.
