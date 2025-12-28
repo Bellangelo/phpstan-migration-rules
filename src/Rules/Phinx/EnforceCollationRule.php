@@ -70,7 +70,7 @@ class EnforceCollationRule implements Rule
                         $this->requiredCollation
                     )
                 )->line($node->getStartLine())
-                ->identifier('phinx.table.missing_collation')
+                ->identifier('phinx.table.missing.collation')
                 ->build(),
             ];
         }
@@ -85,7 +85,7 @@ class EnforceCollationRule implements Rule
                         $this->requiredCollation
                     )
                 )->line($node->getStartLine())
-                ->identifier('phinx.table.options_not_array')
+                ->identifier('phinx.table.options.not.array')
                 ->build(),
             ];
         }
@@ -116,7 +116,7 @@ class EnforceCollationRule implements Rule
                         $this->requiredCollation
                     )
                 )->line($node->getStartLine())
-                ->identifier('phinx.table.missing_collation')
+                ->identifier('phinx.table.missing.collation')
                 ->build(),
             ];
         }
@@ -130,7 +130,7 @@ class EnforceCollationRule implements Rule
                         $collationValue
                     )
                 )->line($node->getStartLine())
-                ->identifier('phinx.table.wrong_collation')
+                ->identifier('phinx.table.wrong.collation')
                 ->build(),
             ];
         }
