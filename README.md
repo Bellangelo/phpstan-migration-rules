@@ -29,6 +29,12 @@ parameters:
             requiredCollation: utf8mb4
 ```
 
+### ForbidAfterRule
+
+Forbids using the after column option in Phinx addColumn() calls, because it can trigger a full table rewrite (unsafe for large or production tables).
+
+No configuration is required.
+
 ### Laravel
 
 Rules for Laravel Migrations are coming soon.

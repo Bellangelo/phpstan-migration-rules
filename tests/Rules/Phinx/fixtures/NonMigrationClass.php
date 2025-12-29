@@ -11,7 +11,8 @@ final class NonMigrationClass
         // Looks similar, but not inside AbstractMigration
         $this->table('users', [
             'collation' => 'utf8mb4_unicode_ci',
-        ]);
+        ])
+        ->addColumn('my_column', ['after' => 'my_other_column']);
     }
 
     /**

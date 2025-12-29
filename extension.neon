@@ -17,3 +17,8 @@ services:
             requiredCollation: %phpstanMigrationRules.phinx.requiredCollation%
         tags:
             - phpstan.rules.rule
+
+    -
+        class: PhpStanMigrationRules\Rules\Phinx\ForbidAfterRule
+        tags:
+            - phpstan.rules.rule
