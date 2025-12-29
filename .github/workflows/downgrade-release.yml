@@ -21,6 +21,8 @@ jobs:
 
       -   run: composer run rector:downgrade
           shell: bash
+
+      -   run: composer require "^7.4 || ^8.0"
     
       -   run: |
             git config user.email "aggelosbellos7@gmail.com"
