@@ -19,7 +19,7 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidAfterRule extends PhinxRule
 {
-    private const RULE_IDENTIFIER = 'phinx.addColumn.afterOptionForbidden';
+    private const string RULE_IDENTIFIER = 'phinx.addColumn.afterOptionForbidden';
 
     public function getNodeType(): string
     {

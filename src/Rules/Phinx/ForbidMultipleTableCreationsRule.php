@@ -17,7 +17,7 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidMultipleTableCreationsRule extends PhinxRule
 {
-    private const RULE_IDENTIFIER = 'phinx.multipleTableCreationsForbidden';
+    private const string RULE_IDENTIFIER = 'phinx.multipleTableCreationsForbidden';
 
     /**
      * @var array<string, int>
