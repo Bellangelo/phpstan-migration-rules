@@ -13,6 +13,7 @@ final class AllowCollation extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table): void {
+            /** @phpstan-ignore method.notFound */
             $table->collation('utf8mb4');
             $table->string('email');
         });

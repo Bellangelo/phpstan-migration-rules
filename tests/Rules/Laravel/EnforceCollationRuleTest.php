@@ -40,6 +40,10 @@ final class EnforceCollationRuleTest extends RuleTestCase
                     'Laravel migrations must set table collation to "utf8mb4" in Schema::create().',
                     15,
                 ],
+                [
+                    'No error with identifier method.notFound is reported on line 17.',
+                    17
+                ]
             ]
         );
     }
@@ -48,7 +52,12 @@ final class EnforceCollationRuleTest extends RuleTestCase
     {
         $this->analyse(
             [__DIR__ . '/fixtures/AllowCollation.php'],
-            []
+            [
+                [
+                    'No error with identifier method.notFound is reported on line 17.',
+                    17
+                ]
+            ]
         );
     }
 
@@ -68,7 +77,7 @@ final class EnforceCollationRuleTest extends RuleTestCase
                 [
                     'No error to ignore is reported on line 15.',
                     15,
-                ]
+                ],
             ],
         );
     }
