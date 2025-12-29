@@ -8,6 +8,9 @@ use PhpStanMigrationRules\Rules\Phinx\ForbidAfterRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
+/**
+ * @extends RuleTestCase<ForbidAfterRule>
+ */
 final class ForbidAfterRuleTest extends RuleTestCase
 {
     protected function getRule(): Rule

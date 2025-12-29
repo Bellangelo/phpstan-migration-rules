@@ -11,8 +11,11 @@ final class NonMigrationClass
         // Looks similar, but not inside AbstractMigration
         $this->table('users', [
             'collation' => 'utf8mb4_unicode_ci',
-        ])
-        ->addColumn('my_column', ['after' => 'my_other_column']);
+        ]);
+        
+        $this->addColumn('my_column', [
+            'after' => 'my_other_column'
+        ]);
     }
 
     /**
@@ -20,6 +23,15 @@ final class NonMigrationClass
      * @param array<string, mixed> $options
      */
     private function table(string $name, array $options = []): void
+    {
+        // local helper, not Phinx
+    }
+
+    /**
+     * @param string $name
+     * @param array<string, mixed> $options
+     */
+    private function addColumn(string $name, array $options = []): void
     {
         // local helper, not Phinx
     }
