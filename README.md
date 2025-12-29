@@ -29,21 +29,25 @@ parameters:
             requiredCollation: utf8mb4
 ```
 
+---
+
 ### ForbidAfterRule
 
 Forbids using the after column option in Phinx addColumn() calls, because it can trigger a full table rewrite (unsafe for large or production tables).
 
 No configuration is required.
 
+---
+
 ### ForbidMultipleTableCreationsRule
 
 Forbids creating more than one table in a single Phinx migration.
 
-This rule enforces the practice that each migration should create exactly one table, improving readability, reviewability, and rollback safety.
-
-A table creation is detected via calls to create() on table instances.
+A table creation is detected via calls to `create()` on table instances.
 
 No configuration is required.
+
+---
 
 ### Laravel
 
