@@ -65,6 +65,6 @@ No configuration is required.
 
 Forbids creating more than one table in a single Laravel migration.
 
-A table creation is detected via multiple Schema::create() calls inside the same migration.
+A table creation is detected via multiple `Schema::create()` calls inside the same migration.
 
 No configuration is required.
