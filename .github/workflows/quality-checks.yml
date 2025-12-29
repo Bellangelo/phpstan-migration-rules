@@ -27,7 +27,7 @@ jobs:
         if: matrix.php != '8.5'
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: 8.5
           tools: composer:v2
           coverage: none
 
