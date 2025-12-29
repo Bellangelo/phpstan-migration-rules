@@ -5,9 +5,21 @@ parametersSchema:
         ])
     ])
 
+parametersSchema:
+    phpstanMigrationRules: structure([
+        laravel: structure([
+            requiredCollation: string()
+        ])
+    ])
+
 parameters:
     phpstanMigrationRules:
         phinx:
+            requiredCollation: utf8
+
+parameters:
+    phpstanMigrationRules:
+        laravel:
             requiredCollation: utf8
 
 services:
@@ -29,10 +41,17 @@ services:
             - phpstan.rules.rule
 
     -
+        class: PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule
+        arguments:
+            requiredCollation: %phpstanMigrationRules.laravel.requiredCollation%
+        tags:
+            - phpstan.rules.rule
+
+    -
         class: PhpStanMigrationRules\Rules\Laravel\ForbidAfterRule
         tags:
             - phpstan.rules.rule
-            
+
     -
         class: PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule
         tags:

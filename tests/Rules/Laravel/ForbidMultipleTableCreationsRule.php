@@ -21,7 +21,7 @@ final class ForbidMultipleTableCreationsRuleTest extends RuleTestCase
     public function testReportsSecondSchemaCreateInMigration(): void
     {
         $this->analyse(
-            [__DIR__ . '/Fixtures/ForbidMultipleTableCreations.php'],
+            [__DIR__ . '/fixtures/ForbidMultipleTableCreations.php'],
             [
                 [
                     'Creating multiple tables in a single Laravel migration is forbidden. Each migration should create exactly one table.',
@@ -35,7 +35,7 @@ final class ForbidMultipleTableCreationsRuleTest extends RuleTestCase
     public function testAllowsSingleSchemaCreateInMigration(): void
     {
         $this->analyse(
-            [__DIR__ . '/Fixtures/AllowSingleTableCreation.php'],
+            [__DIR__ . '/fixtures/AllowSingleTableCreation.php'],
             []
         );
     }
@@ -46,8 +46,8 @@ final class ForbidMultipleTableCreationsRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/NonMigrationClass.php'],
             [
                 [
-                    'No error to ignore is reported on line 14.',
-                    14,
+                    'No error to ignore is reported on line 15.',
+                    15,
                 ]
             ],
         );

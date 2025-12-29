@@ -51,6 +51,22 @@ No configuration is required.
 
 ### Laravel
 
+### EnforceCollationRule
+
+Enforces that Laravel Schema::create() and Schema::table() calls specify a table collation (default: utf8).
+
+The rule detects collation being set anywhere inside the Blueprint callback via either:
+
+- `$table->collation('...')`, or
+- `$table->collation = '...'`
+
+```yaml
+parameters:
+    phpstanMigrationRules:
+        phinx:
+            requiredCollation: utf8mb4
+```
+
 ### ForbidAfterRule
 
 Forbids using Laravel’s `after()` column modifier in migrations.
