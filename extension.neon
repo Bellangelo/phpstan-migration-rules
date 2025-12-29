@@ -27,3 +27,8 @@ services:
         class: PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule
         tags:
             - phpstan.rules.rule
+
+    -
+        class: PhpStanMigrationRules\Rules\Laravel\ForbidAfterRule
+        tags:
+            - phpstan.rules.rule
