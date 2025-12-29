@@ -8,6 +8,9 @@ use PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
+/**
+ * @extends RuleTestCase<ForbidMultipleTableCreationsRule>
+ */
 final class ForbidMultipleTableCreationsRuleTest extends RuleTestCase
 {
     protected function getRule(): Rule
