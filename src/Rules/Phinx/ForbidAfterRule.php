@@ -12,13 +12,12 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
-use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
- * @implements Rule<MethodCall>
+ * @extends PhinxRule<MethodCall>
  */
-final class ForbidAfterRule implements Rule
+final class ForbidAfterRule extends PhinxRule
 {
     private const RULE_IDENTIFIER = 'phinx.addColumn.afterOptionForbidden';
 
@@ -29,13 +28,7 @@ final class ForbidAfterRule implements Rule
 
     public function processNode(Node $node, Scope $scope): array
     {
-        // Check if we're in a Phinx migration class (extends AbstractMigration)
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection === null) {
-            return [];
-        }
-
-        if (!$classReflection->isSubclassOf(\Phinx\Migration\AbstractMigration::class)) {
+        if (!$this->isPhinxMigration($scope)) {
             return [];
         }
 

@@ -12,6 +12,10 @@ final class NonMigrationClass
         $this->table('users', [
             'collation' => 'utf8mb4_unicode_ci',
         ]);
+
+        $this->table('users', [
+            'collation' => 'utf8mb4_unicode_ci',
+        ]);
         
         $this->addColumn('my_column', [
             'after' => 'my_other_column'

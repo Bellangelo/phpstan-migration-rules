@@ -93,7 +93,7 @@ final class EnforceCollationRuleTest extends RuleTestCase
         );
     }
 
-    public function testNonMigrationClassIsIgnored(): void
+    public function testDoesNotReportOutsidePhinxMigration(): void
     {
         $this->analyse(
             [

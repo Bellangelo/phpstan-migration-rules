@@ -39,7 +39,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
         );
     }
 
-    public function testNonMigrationClass(): void
+    public function testDoesNotReportOutsidePhinxMigration(): void
     {
         $this->analyse(
             [__DIR__ . '/fixtures/NonMigrationClass.php'],

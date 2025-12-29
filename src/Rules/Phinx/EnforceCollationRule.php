@@ -10,15 +10,14 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
-use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Rules\IdentifierRuleError;
 
 /**
- * @implements Rule<MethodCall>
+ * @extends PhinxRule<MethodCall>
  */
-class EnforceCollationRule implements Rule
+class EnforceCollationRule extends PhinxRule
 {
     public function __construct(private string $requiredCollation = 'utf8')
     {
@@ -31,18 +30,12 @@ class EnforceCollationRule implements Rule
 
     public function processNode(Node $node, Scope $scope): array
     {
+        if (!$this->isPhinxMigration($scope)) {
+            return [];
+        }
+
         $methodName = $node->name instanceof Node\Identifier ? $node->name->toString() : null;
         if ($methodName === null) {
-            return [];
-        }
-
-        // Check if we're in a Phinx migration class (extends AbstractMigration)
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection === null) {
-            return [];
-        }
-
-        if (!$classReflection->isSubclassOf(\Phinx\Migration\AbstractMigration::class)) {
             return [];
         }
 
