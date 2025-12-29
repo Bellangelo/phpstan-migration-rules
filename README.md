@@ -53,8 +53,8 @@ No configuration is required.
 
 ### ForbidAfterRule
 
-Forbids using Laravel’s after() column modifier in migrations.
+Forbids using Laravel’s `after()` column modifier in migrations.
 
-Using after() can force a full table rewrite or long locks (engine-dependent), which is unsafe for large or production tables.
+Using `after()` can force a full table rewrite or long locks (engine-dependent), which is unsafe for large or production tables.
 
 No configuration is required.
