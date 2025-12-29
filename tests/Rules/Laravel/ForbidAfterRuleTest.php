@@ -21,7 +21,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
     public function testReportsAfterInFluentChain(): void
     {
         $this->analyse(
-            [__DIR__ . '/Fixtures/ForbidAfter.php'],
+            [__DIR__ . '/fixtures/ForbidAfter.php'],
             [
                 [
                     'Using "after()" in migrations is forbidden. It forces a full table rewrite or long locks depending on the engine, which is unsafe for large or production tables.',
@@ -38,7 +38,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
     public function testReportsAfterInsideCreateClosure(): void
     {
         $this->analyse(
-            [__DIR__ . '/Fixtures/ForbidAfterInCreate.php'],
+            [__DIR__ . '/fixtures/ForbidAfterInCreate.php'],
             [
                 [
                     'Using "after()" in migrations is forbidden. It forces a full table rewrite or long locks depending on the engine, which is unsafe for large or production tables.',
@@ -55,7 +55,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
     public function testDoesNotReportOutsideLaravelMigration(): void
     {
         $this->analyse(
-            [__DIR__ . '/Fixtures/NonMigrationClass.php'],
+            [__DIR__ . '/fixtures/NonMigrationClass.php'],
             [
                 [
                     'No error with identifier argument.type is reported on line 14.',
