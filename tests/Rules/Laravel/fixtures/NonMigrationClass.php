@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpStanMigrationRules\Tests\Rules\Laravel\Fixtures;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 final class NonMigrationClass
 {
@@ -14,5 +15,8 @@ final class NonMigrationClass
         $table = new Blueprint('users', 'random', null);
 
         $table->string('email')->after('username');
+
+        Schema::create('users', static function (): void {
+        });
     }
 }

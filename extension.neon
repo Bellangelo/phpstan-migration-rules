@@ -32,3 +32,8 @@ services:
         class: PhpStanMigrationRules\Rules\Laravel\ForbidAfterRule
         tags:
             - phpstan.rules.rule
+            
+    -
+        class: PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule
+        tags:
+            - phpstan.rules.rule

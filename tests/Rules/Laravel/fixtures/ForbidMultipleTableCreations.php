@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace PhpStanMigrationRules\Tests\Rules\Laravel\Fixtures;
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-final class ForbidAfterInCreate extends Migration
+final class ForbidMultipleTableCreations extends Migration
 {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table): void {
-            $table->string('email')->after('username');
+        Schema::create('users', static function (): void {
+        });
+        Schema::create('courses', static function (): void {
         });
     }
 }

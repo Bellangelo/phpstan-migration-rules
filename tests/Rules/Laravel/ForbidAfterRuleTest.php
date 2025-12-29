@@ -42,11 +42,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
             [
                 [
                     'Using "after()" in migrations is forbidden. It forces a full table rewrite or long locks depending on the engine, which is unsafe for large or production tables.',
-                    25,
-                ],
-                [
-                    'No error to ignore is reported on line 20.',
-                    20,
+                    16,
                 ],
             ]
         );
@@ -58,8 +54,8 @@ final class ForbidAfterRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/NonMigrationClass.php'],
             [
                 [
-                    'No error to ignore is reported on line 14.',
-                    14,
+                    'No error to ignore is reported on line 15.',
+                    15,
                 ]
             ],
         );
