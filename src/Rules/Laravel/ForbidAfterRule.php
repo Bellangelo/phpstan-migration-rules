@@ -17,7 +17,10 @@ use PHPStan\Type\ObjectType;
  */
 final class ForbidAfterRule implements Rule
 {
-    private const string RULE_IDENTIFIER = 'laravel.schema.afterForbidden';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'laravel.schema.afterForbidden';
 
     public function getNodeType(): string
     {

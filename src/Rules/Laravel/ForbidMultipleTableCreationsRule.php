@@ -17,7 +17,10 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidMultipleTableCreationsRule implements Rule
 {
-    private const string RULE_IDENTIFIER = 'laravel.schema.multipleTableCreationsForbidden';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'laravel.schema.multipleTableCreationsForbidden';
 
     /**
      * @var array<string, int>

@@ -23,13 +23,20 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<StaticCall>
  */
-final readonly class EnforceCollationRule implements Rule
+final class EnforceCollationRule implements Rule
 {
-    private const string RULE_IDENTIFIER = 'laravel.schema.requiredCollation';
+    /**
+     * @readonly
+     */
+    private string $requiredCollation;
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'laravel.schema.requiredCollation';
 
-    public function __construct(
-        private readonly string $requiredCollation
-    ) {
+    public function __construct(string $requiredCollation)
+    {
+        $this->requiredCollation = $requiredCollation;
     }
 
     public function getNodeType(): string

@@ -19,8 +19,13 @@ use PHPStan\Rules\IdentifierRuleError;
  */
 class EnforceCollationRule extends PhinxRule
 {
-    public function __construct(private readonly string $requiredCollation)
+    /**
+     * @readonly
+     */
+    private string $requiredCollation;
+    public function __construct(string $requiredCollation)
     {
+        $this->requiredCollation = $requiredCollation;
     }
 
     public function getNodeType(): string
