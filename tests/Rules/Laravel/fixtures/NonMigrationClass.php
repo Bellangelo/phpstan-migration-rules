@@ -10,7 +10,7 @@ final class NonMigrationClass
 {
     public function run(): void
     {
-        /** @phpstan-ignore argument.type */
+        /** @phpstan-ignore-next-line */
         $table = new Blueprint('users', 'random', null);
 
         $table->string('email')->after('username');

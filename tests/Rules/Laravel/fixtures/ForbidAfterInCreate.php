@@ -16,7 +16,7 @@ final class ForbidAfterInCreate extends Migration
         $schema = new class {
             public function create(string $table, callable $callback): void
             {
-                /** @phpstan-ignore argument.type */
+                /** @phpstan-ignore-next-line */
                 $callback(new Blueprint($table, 'random', null));
             }
         };

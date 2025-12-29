@@ -28,7 +28,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
                     17,
                 ],
                 [
-                    'No error with identifier argument.type is reported on line 15.',
+                    'No error to ignore is reported on line 15.',
                     15,
                 ],
             ]
@@ -45,7 +45,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
                     25,
                 ],
                 [
-                    'No error with identifier argument.type is reported on line 20.',
+                    'No error to ignore is reported on line 20.',
                     20,
                 ],
             ]
@@ -58,7 +58,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/NonMigrationClass.php'],
             [
                 [
-                    'No error with identifier argument.type is reported on line 14.',
+                    'No error to ignore is reported on line 14.',
                     14,
                 ]
             ],

@@ -11,7 +11,7 @@ final class ForbidAfter extends Migration
 {
     public function up(): void
     {
-        /** @phpstan-ignore argument.type */
+        /** @phpstan-ignore-next-line */
         $table = new Blueprint('users', 'random', null);
 
         $table->string('email')->after('username');
