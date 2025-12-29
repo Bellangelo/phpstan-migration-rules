@@ -25,9 +25,6 @@ jobs:
           shell: bash
 
       -   run: composer require php "^7.4 || ^8.0"
-
-      -   name: Install dependencies
-          run: composer install --no-interaction --no-progress --prefer-dist
     
       -   run: |
             git config user.email "aggelosbellos7@gmail.com"

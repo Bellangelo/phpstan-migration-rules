@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup PHP
+        if: matrix.php != '8.5'
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
@@ -31,11 +32,19 @@ jobs:
           coverage: none
 
       - name: Install dependencies
+        if: matrix.php != '8.5'
         run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Rector downgrade
         if: matrix.php != '8.5'
         run: composer run rector:downgrade
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: none
 
       - run: composer require php "^7.4 || ^8.0"
 
