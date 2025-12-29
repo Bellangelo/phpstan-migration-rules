@@ -19,7 +19,7 @@ use PHPStan\Rules\IdentifierRuleError;
  */
 class EnforceCollationRule extends PhinxRule
 {
-    public function __construct(private readonly string $requiredCollation = 'utf8')
+    public function __construct(private readonly string $requiredCollation)
     {
     }
 
