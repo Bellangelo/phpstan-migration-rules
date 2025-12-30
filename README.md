@@ -1,6 +1,6 @@
 # PHPStan Rules for Database Migrations
 
-A collection of PHPStan rules to enforce best practices and standards in database migration files for various frameworks and tools.
+A collection of PHPStan rules to enforce best practices and standards in database migration files for Phinx and Laravel / Illuminate.
 
 ## Installation
 
@@ -15,72 +15,69 @@ includes:
     - vendor/bellangelo/phpstan-migration-rules/extension.neon
 ```
 
-## Rules
+## Rule catalog
 
-### Phinx
+Each rule below applies to migration files, regardless of framework, unless stated otherwise.
 
-### EnforceCollationRule
+### Rule: `EnforceCollationRule`
 
-Enforces that all Phinx `table()` method calls specify a collation (default: `utf8`)
-```yaml
-parameters:
-    phpstanMigrationRules:
-        phinx:
-            requiredCollation: utf8mb4
-```
+| Field | Description |
+|---|---|
+| Purpose | Enforces that table definitions explicitly define a collation |
+| Why | Prevents relying on database defaults, which may differ between environments |
+| Framework support | Phinx, Laravel |
+| Default behavior | Requires a collation to be specified |
+| Configuration | `requiredCollation` (string) |
 
----
-
-### ForbidAfterRule
-
-Forbids using the after column option in Phinx addColumn() calls, because it can trigger a full table rewrite (unsafe for large or production tables).
-
-No configuration is required.
-
----
-
-### ForbidMultipleTableCreationsRule
-
-Forbids creating more than one table in a single Phinx migration.
-
-A table creation is detected via calls to `create()` on table instances.
-
-No configuration is required.
-
----
-
-### Laravel
-
-### EnforceCollationRule
-
-Enforces that Laravel Schema::create() and Schema::table() calls specify a table collation (default: utf8).
-
-The rule detects collation being set anywhere inside the Blueprint callback via either:
-
-- `$table->collation('...')`, or
-- `$table->collation = '...'`
+#### Configuration
 
 ```yaml
 parameters:
     phpstanMigrationRules:
-        phinx:
-            requiredCollation: utf8mb4
+        requiredCollation: utf8mb4
 ```
 
-### ForbidAfterRule
+#### Detection details
 
-Forbids using Laravel’s `after()` column modifier in migrations.
-
-Using `after()` can force a full table rewrite or long locks (engine-dependent), which is unsafe for large or production tables.
-
-No configuration is required.
+| Framework | How collation is detected |
+|---|---|
+| Phinx | `table('name', ['collation' => '…'])` |
+| Laravel | `$table->collation('…')` or `$table->collation = '…'` inside the Blueprint callback |
 
 ---
 
-### ForbidMultipleTableCreationsRule
+### Rule: `ForbidAfterRule`
 
-Forbids creating more than one table in a single Laravel migration.
+| Field | Description |
+|---|---|
+| Purpose | Forbids column positioning via `after()` |
+| Why | May trigger full table rewrites or long locks, unsafe for large or production tables |
+| Framework support | Phinx, Laravel |
+| Configuration | None |
 
-A table creation is detected via multiple `Schema::create()` calls inside the same migration.
+#### Detection details
 
-No configuration is required.
+| Framework | Forbidden usage |
+|---|---|
+| Phinx | `addColumn(..., ['after' => 'column'])` |
+| Laravel | `$table->string('x')->after('y')` |
+
+---
+
+### Rule: `ForbidMultipleTableCreationsRule`
+
+| Field | Description |
+|---|---|
+| Purpose | Ensures each migration creates at most one table |
+| Why | Improves rollback safety and migration clarity |
+| Framework support | Phinx, Laravel |
+| Configuration | None |
+
+---
+
+#### Detection details
+
+| Framework | What counts as a table creation |
+|---|---|
+| Phinx | Multiple calls to `create()` on table instances |
+| Laravel | Multiple `Schema::create()` calls in the same migration |
