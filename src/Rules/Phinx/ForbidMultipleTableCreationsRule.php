@@ -11,8 +11,6 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
- * Forbids creating more than one table in a single Phinx migration.
- *
  * @extends PhinxRule<MethodCall>
  */
 final class ForbidMultipleTableCreationsRule extends PhinxRule

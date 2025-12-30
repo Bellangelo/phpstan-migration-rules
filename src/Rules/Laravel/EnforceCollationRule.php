@@ -17,13 +17,12 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
-use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
- * @implements Rule<StaticCall>
+ * @extends LaravelRule<StaticCall>
  */
-final readonly class EnforceCollationRule implements Rule
+final class EnforceCollationRule extends LaravelRule
 {
     private const string RULE_IDENTIFIER = 'laravel.schema.requiredCollation';
 
@@ -39,13 +38,7 @@ final readonly class EnforceCollationRule implements Rule
 
     public function processNode(Node $node, Scope $scope): array
     {
-        // Only apply inside Laravel migration classes.
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection === null) {
-            return [];
-        }
-
-        if (!$classReflection->isSubclassOf(\Illuminate\Database\Migrations\Migration::class)) {
+        if (!$this->isLaravelMigration($scope)) {
             return [];
         }
 

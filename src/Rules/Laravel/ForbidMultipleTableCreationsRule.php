@@ -9,13 +9,12 @@ use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
-use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
- * @implements Rule<StaticCall>
+ * @extends LaravelRule<StaticCall>
  */
-final class ForbidMultipleTableCreationsRule implements Rule
+final class ForbidMultipleTableCreationsRule extends LaravelRule
 {
     private const string RULE_IDENTIFIER = 'laravel.schema.multipleTableCreationsForbidden';
 
@@ -31,12 +30,7 @@ final class ForbidMultipleTableCreationsRule implements Rule
 
     public function processNode(Node $node, Scope $scope): array
     {
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection === null) {
-            return [];
-        }
-
-        if (!$classReflection->isSubclassOf(\Illuminate\Database\Migrations\Migration::class)) {
+        if (!$this->isLaravelMigration($scope)) {
             return [];
         }
 

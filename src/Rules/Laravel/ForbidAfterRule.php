@@ -8,14 +8,13 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
-use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\ObjectType;
 
 /**
- * @implements Rule<MethodCall>
+ * @extends LaravelRule<MethodCall>
  */
-final class ForbidAfterRule implements Rule
+final class ForbidAfterRule extends LaravelRule
 {
     private const string RULE_IDENTIFIER = 'laravel.schema.afterForbidden';
 
@@ -56,15 +55,5 @@ final class ForbidAfterRule implements Rule
     {
         return $node->name instanceof Identifier
             && $node->name->toString() === 'after';
-    }
-
-    private function isLaravelMigration(Scope $scope): bool
-    {
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection === null) {
-            return false;
-        }
-
-        return $classReflection->isSubclassOf(\Illuminate\Database\Migrations\Migration::class);
     }
 }
