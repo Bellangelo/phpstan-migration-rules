@@ -22,62 +22,48 @@ Each rule below applies to migration files, regardless of framework, unless stat
 ### Rule: `EnforceCollationRule`
 
 | Field | Description |
-|---|---|
-| Purpose | Enforces that table definitions explicitly define a collation |
-| Why | Prevents relying on database defaults, which may differ between environments |
-| Framework support | Phinx, Laravel |
-| Default behavior | Requires a collation to be specified |
-| Configuration | `requiredCollation` (string) |
+Purpose | Enforces that table definitions explicitly define a collation.
+> Prevents relying on database defaults, which may differ between environments.
 
 #### Configuration
 
 ```yaml
 parameters:
     phpstanMigrationRules:
-        requiredCollation: utf8mb4
+        requiredCollation: utf8mb4 # Default is utf8
 ```
 
-#### Detection details
+#### Support
 
 | Framework | How collation is detected |
 |---|---|
-| Phinx | `table('name', ['collation' => '…'])` |
-| Laravel | `$table->collation('…')` or `$table->collation = '…'` inside the Blueprint callback |
+| [Phinx](./src/Rules/Phinx/EnforceCollationRule.php) | `table('name', ['collation' => '…'])` | [Phinx/EnforceCollationRule](./src/Rules/Phinx/EnforceCollationRule.php) |
+| [Laravel]((./src/Rules/Laravel/EnforceCollationRule.php)) | `$table->collation('…')` or `$table->collation = '…'` inside the Blueprint callback |
 
 ---
 
 ### Rule: `ForbidAfterRule`
+Forbids column positioning via `after`.
+> May trigger full table rewrites or long locks, unsafe for large or production tables.
 
-| Field | Description |
-|---|---|
-| Purpose | Forbids column positioning via `after()` |
-| Why | May trigger full table rewrites or long locks, unsafe for large or production tables |
-| Framework support | Phinx, Laravel |
-| Configuration | None |
-
-#### Detection details
+#### Support
 
 | Framework | Forbidden usage |
 |---|---|
-| Phinx | `addColumn(..., ['after' => 'column'])` |
-| Laravel | `$table->string('x')->after('y')` |
+| [Phinx](./src/Rules/Phinx/ForbidAfterRule.php) | `addColumn(..., ['after' => 'column'])` |
+| [Laravel](./src/Rules/Laravel/ForbidAfterRule.php) | `$table->string('x')->after('y')` |
 
 ---
 
 ### Rule: `ForbidMultipleTableCreationsRule`
-
-| Field | Description |
-|---|---|
-| Purpose | Ensures each migration creates at most one table |
-| Why | Improves rollback safety and migration clarity |
-| Framework support | Phinx, Laravel |
-| Configuration | None |
+Ensures each migration creates at most one table.
+> Improves rollback safety and migration clarity
 
 ---
 
-#### Detection details
+#### Support
 
 | Framework | What counts as a table creation |
 |---|---|
-| Phinx | Multiple calls to `create()` on table instances |
-| Laravel | Multiple `Schema::create()` calls in the same migration |
+| [Phinx](./src/Rules/Phinx/ForbidMultipleTableCreationsRule.php) | Multiple calls to `create()` on table instances |
+| [Laravel](./src/Rules/Laravel/ForbidMultipleTableCreationsRule.php) | Multiple `Schema::create()` calls in the same migration |
