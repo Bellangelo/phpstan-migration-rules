@@ -17,21 +17,35 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class EnforceCollationRule extends PhinxRule
 {
+    /**
+     * @readonly
+     */
+    private string $requiredCollation;
     // Same identifier as Laravel
-    private const string RULE_IDENTIFIER = 'phinx.schema.requiredCollation';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'phinx.schema.requiredCollation';
 
-    private const string MESSAGE_MISSING =
+    /**
+     * @var string
+     */
+    private const MESSAGE_MISSING =
         'Required: table collation must be "%s". '
         . 'Why: prevents environment-dependent defaults and keeps schema consistent. '
         . 'Fix: set the table collation explicitly in the migration.';
 
-    private const string MESSAGE_WRONG =
+    /**
+     * @var string
+     */
+    private const MESSAGE_WRONG =
         'Required: table collation must be "%s". Found: "%s". '
         . 'Why: prevents environment-dependent defaults and keeps schema consistent. '
         . 'Fix: set the table collation explicitly in the migration.';
 
-    public function __construct(private readonly string $requiredCollation)
+    public function __construct(string $requiredCollation)
     {
+        $this->requiredCollation = $requiredCollation;
     }
 
     public function getNodeType(): string
