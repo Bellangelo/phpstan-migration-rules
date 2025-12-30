@@ -18,6 +18,11 @@ final class ForbidMultipleTableCreationsRule extends LaravelRule
 {
     private const string RULE_IDENTIFIER = 'laravel.schema.multipleTableCreationsForbidden';
 
+    private const string MESSAGE =
+        'Forbidden: creating multiple tables in a single migration. '
+        . 'Why: reduces reviewability and rollback safety. '
+        . 'Fix: split into one migration per table.';
+
     /**
      * @var array<string, int>
      */
@@ -43,12 +48,9 @@ final class ForbidMultipleTableCreationsRule extends LaravelRule
 
         if ($this->createCallsPerFile[$file] > 1) {
             return [
-                RuleErrorBuilder::message(
-                    'Creating multiple tables in a single Laravel migration is forbidden. '
-                    . 'Each migration should create exactly one table.'
-                )
-                ->identifier(self::RULE_IDENTIFIER)
-                ->build(),
+                RuleErrorBuilder::message(self::MESSAGE)
+                    ->identifier(self::RULE_IDENTIFIER)
+                    ->build(),
             ];
         }
 
@@ -68,6 +70,6 @@ final class ForbidMultipleTableCreationsRule extends LaravelRule
         $resolved = $scope->resolveName($node->class);
 
         return $resolved === \Illuminate\Support\Facades\Schema::class
-            || $resolved === 'Illuminate\\Database\\Schema\\Schema'; // Rare case
+            || $resolved === 'Illuminate\\Database\\Schema\\Schema';
     }
 }

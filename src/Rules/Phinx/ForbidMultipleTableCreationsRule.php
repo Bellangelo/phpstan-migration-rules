@@ -15,12 +15,17 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidMultipleTableCreationsRule extends PhinxRule
 {
-    private const string RULE_IDENTIFIER = 'phinx.multipleTableCreationsForbidden';
+    private const string RULE_IDENTIFIER = 'phinx.schema.multipleTableCreationsForbidden';
+
+    private const string MESSAGE =
+        'Forbidden: creating multiple tables in a single migration. '
+        . 'Why: reduces reviewability and rollback safety. '
+        . 'Fix: split into one migration per table.';
 
     /**
      * @var array<string, int>
      */
-    private array $createCallsPerFile = [];
+    private array $tableCallsPerClass = [];
 
     public function getNodeType(): string
     {
@@ -33,30 +38,32 @@ final class ForbidMultipleTableCreationsRule extends PhinxRule
             return [];
         }
 
-        if (!$this->isCreateCall($node)) {
+        if (!$this->isTableCall($node)) {
             return [];
         }
 
-        $file = $scope->getFile();
-        $this->createCallsPerFile[$file] = ($this->createCallsPerFile[$file] ?? 0) + 1;
+        $classReflection = $scope->getClassReflection();
+        if ($classReflection === null) {
+            return [];
+        }
 
-        if ($this->createCallsPerFile[$file] > 1) {
+        $className = $classReflection->getName();
+        $this->tableCallsPerClass[$className] = ($this->tableCallsPerClass[$className] ?? 0) + 1;
+
+        if ($this->tableCallsPerClass[$className] > 1) {
             return [
-                RuleErrorBuilder::message(
-                    'Creating multiple tables in a single Phinx migration is forbidden. '
-                    . 'Each migration should create exactly one table.'
-                )
-                ->identifier(self::RULE_IDENTIFIER)
-                ->build(),
+                RuleErrorBuilder::message(self::MESSAGE)
+                    ->identifier(self::RULE_IDENTIFIER)
+                    ->build(),
             ];
         }
 
         return [];
     }
 
-    private function isCreateCall(MethodCall $node): bool
+    private function isTableCall(MethodCall $node): bool
     {
         return $node->name instanceof Identifier
-            && $node->name->toString() === 'create';
+            && $node->name->toString() === 'table';
     }
 }

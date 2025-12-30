@@ -24,9 +24,8 @@ final class ForbidMultipleTableCreationsRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/ForbidMultipleTableCreations.php'],
             [
                 [
-                    'Creating multiple tables in a single Laravel migration is forbidden. Each migration should create exactly one table.',
-                    18,
-                    'laravel.schema.multipleTableCreationsForbidden',
+                    'Forbidden: creating multiple tables in a single migration. Why: reduces reviewability and rollback safety. Fix: split into one migration per table.',
+                    16,
                 ],
             ]
         );
