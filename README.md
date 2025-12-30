@@ -20,9 +20,7 @@ includes:
 Each rule below applies to migration files, regardless of framework, unless stated otherwise.
 
 ### Rule: `EnforceCollationRule`
-
-| Field | Description |
-Purpose | Enforces that table definitions explicitly define a collation.
+Enforces that table definitions explicitly define a collation.
 > Prevents relying on database defaults, which may differ between environments.
 
 #### Configuration
