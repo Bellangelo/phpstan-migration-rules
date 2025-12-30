@@ -16,9 +16,15 @@ use PHPStan\Type\ObjectType;
  */
 final class ForbidAfterRule extends LaravelRule
 {
-    private const string RULE_IDENTIFIER = 'laravel.schema.afterForbidden';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'laravel.schema.afterForbidden';
 
-    private const string MESSAGE =
+    /**
+     * @var string
+     */
+    private const MESSAGE =
         'Forbidden: column positioning ("after"). '
         . 'Why: can trigger a full table rewrite or long locks depending on the engine. '
         . 'Fix: avoid column ordering in migrations.';
