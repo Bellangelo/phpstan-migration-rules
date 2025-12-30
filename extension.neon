@@ -1,32 +1,17 @@
 parametersSchema:
     phpstanMigrationRules: structure([
-        phinx: structure([
-            requiredCollation: string()
-        ])
-    ])
-
-parametersSchema:
-    phpstanMigrationRules: structure([
-        laravel: structure([
-            requiredCollation: string()
-        ])
+        requiredCollation: string()
     ])
 
 parameters:
     phpstanMigrationRules:
-        phinx:
-            requiredCollation: utf8
-
-parameters:
-    phpstanMigrationRules:
-        laravel:
-            requiredCollation: utf8
+        requiredCollation: utf8
 
 services:
     -
         class: PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule
         arguments:
-            requiredCollation: %phpstanMigrationRules.phinx.requiredCollation%
+            requiredCollation: %phpstanMigrationRules.requiredCollation%
         tags:
             - phpstan.rules.rule
 
@@ -43,7 +28,7 @@ services:
     -
         class: PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule
         arguments:
-            requiredCollation: %phpstanMigrationRules.laravel.requiredCollation%
+            requiredCollation: %phpstanMigrationRules.requiredCollation%
         tags:
             - phpstan.rules.rule
 
