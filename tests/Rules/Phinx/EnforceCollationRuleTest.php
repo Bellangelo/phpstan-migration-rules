@@ -15,7 +15,6 @@ final class EnforceCollationRuleTest extends RuleTestCase
 {
     protected function getRule(): Rule
     {
-        // Default required collation is `utf8`
         return new EnforceCollationRule('utf8');
     }
 
@@ -27,7 +26,7 @@ final class EnforceCollationRuleTest extends RuleTestCase
             ],
             [
                 [
-                    'Phinx table() method must specify collation. Expected collation: "utf8"',
+                    'Required: table collation must be "utf8". Why: prevents environment-dependent defaults and keeps schema consistent. Fix: set the table collation explicitly in the migration.',
                     13,
                 ],
             ]
@@ -42,7 +41,7 @@ final class EnforceCollationRuleTest extends RuleTestCase
             ],
             [
                 [
-                    'Phinx table() method options must be an array with collation set to "utf8"',
+                    'Required: table collation must be "utf8". Why: prevents environment-dependent defaults and keeps schema consistent. Fix: set the table collation explicitly in the migration.',
                     14,
                 ],
                 [
@@ -61,7 +60,7 @@ final class EnforceCollationRuleTest extends RuleTestCase
             ],
             [
                 [
-                    'Phinx table() method must specify collation option. Expected: "utf8"',
+                    'Required: table collation must be "utf8". Why: prevents environment-dependent defaults and keeps schema consistent. Fix: set the table collation explicitly in the migration.',
                     13,
                 ],
             ]
@@ -76,7 +75,7 @@ final class EnforceCollationRuleTest extends RuleTestCase
             ],
             [
                 [
-                    'Phinx table() method collation must be "utf8", got "utf8mb4_unicode_ci"',
+                    'Required: table collation must be "utf8". Found: "utf8mb4_unicode_ci". Why: prevents environment-dependent defaults and keeps schema consistent. Fix: set the table collation explicitly in the migration.',
                     13,
                 ],
             ]

@@ -24,7 +24,7 @@ final class EnforceCollationRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/MissingCollation.php'],
             [
                 [
-                    'Laravel migrations must set table collation to "utf8mb4" in Schema::create().',
+                    'Required: table collation must be "utf8mb4". Why: prevents environment-dependent defaults and keeps schema consistent. Fix: set the table collation explicitly in the migration.',
                     15,
                 ],
             ]
@@ -37,7 +37,7 @@ final class EnforceCollationRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/WrongCollation.php'],
             [
                 [
-                    'Laravel migrations must set table collation to "utf8mb4" in Schema::create().',
+                    'Required: table collation must be "utf8mb4". Found: "utf8". Why: prevents environment-dependent defaults and keeps schema consistent. Fix: set the table collation explicitly in the migration.',
                     15,
                 ],
                 [

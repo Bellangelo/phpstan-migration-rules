@@ -24,7 +24,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/ForbidAfterMigration.php'],
             [
                 [
-                    'Forbidden: column positioning ("after"). Reason: can trigger a full table rewrite or long locks depending on the engine. Fix: avoid column ordering in migrations.',
+                    'Forbidden: column positioning ("after"). Why: can trigger a full table rewrite or long locks depending on the engine. Fix: avoid column ordering in migrations.',
                     18,
                 ],
             ]
