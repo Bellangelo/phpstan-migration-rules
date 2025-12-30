@@ -24,7 +24,18 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class EnforceCollationRule extends LaravelRule
 {
+    // Same identifier as Phinx (as requested)
     private const string RULE_IDENTIFIER = 'laravel.schema.requiredCollation';
+
+    private const string MESSAGE_MISSING =
+        'Required: table collation must be "%s". '
+        . 'Why: prevents environment-dependent defaults and keeps schema consistent. '
+        . 'Fix: set the table collation explicitly in the migration.';
+
+    private const string MESSAGE_WRONG =
+        'Required: table collation must be "%s". Found: "%s". '
+        . 'Why: prevents environment-dependent defaults and keeps schema consistent. '
+        . 'Fix: set the table collation explicitly in the migration.';
 
     public function __construct(
         private readonly string $requiredCollation
@@ -71,13 +82,17 @@ final class EnforceCollationRule extends LaravelRule
 
         $collation = $this->findCollationInClosure($closure, $tableVarName);
 
+        if ($collation === null) {
+            return [
+                RuleErrorBuilder::message(sprintf(self::MESSAGE_MISSING, $this->requiredCollation))
+                    ->identifier(self::RULE_IDENTIFIER)
+                    ->build(),
+            ];
+        }
+
         if ($collation !== $this->requiredCollation) {
             return [
-                RuleErrorBuilder::message(sprintf(
-                    'Laravel migrations must set table collation to "%s" in Schema::%s().',
-                    $this->requiredCollation,
-                    $callName
-                ))
+                RuleErrorBuilder::message(sprintf(self::MESSAGE_WRONG, $this->requiredCollation, $collation))
                     ->identifier(self::RULE_IDENTIFIER)
                     ->build(),
             ];
@@ -161,7 +176,6 @@ final class EnforceCollationRule extends LaravelRule
             return $node->expr->value;
         }
 
-        // Recurse into child nodes
         foreach ($node->getSubNodeNames() as $subNodeName) {
             $subNode = $node->$subNodeName;
 

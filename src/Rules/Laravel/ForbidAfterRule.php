@@ -20,7 +20,7 @@ final class ForbidAfterRule extends LaravelRule
 
     private const string MESSAGE =
         'Forbidden: column positioning ("after"). '
-        . 'Reason: can trigger a full table rewrite or long locks depending on the engine. '
+        . 'Why: can trigger a full table rewrite or long locks depending on the engine. '
         . 'Fix: avoid column ordering in migrations.';
 
     public function getNodeType(): string
