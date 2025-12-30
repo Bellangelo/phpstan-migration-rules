@@ -18,6 +18,11 @@ final class ForbidAfterRule extends LaravelRule
 {
     private const string RULE_IDENTIFIER = 'laravel.schema.afterForbidden';
 
+    private const string MESSAGE =
+        'Forbidden: column positioning ("after"). '
+        . 'Reason: can trigger a full table rewrite or long locks depending on the engine. '
+        . 'Fix: avoid column ordering in migrations.';
+
     public function getNodeType(): string
     {
         return MethodCall::class;
@@ -33,21 +38,18 @@ final class ForbidAfterRule extends LaravelRule
             return [];
         }
 
-        // Only fire when PHPStan can prove this is a ColumnDefinition->after()
+        // Only fire when PHPStan can prove this is ColumnDefinition->after()
         $receiverType = $scope->getType($node->var);
         $columnDefinitionType = new ObjectType(\Illuminate\Database\Schema\ColumnDefinition::class);
 
-        if (!$receiverType->isSuperTypeOf($columnDefinitionType)->yes()) {
+        if (!$columnDefinitionType->isSuperTypeOf($receiverType)->yes()) {
             return [];
         }
 
         return [
-            RuleErrorBuilder::message(
-                'Using "after()" in migrations is forbidden. '
-                . 'It forces a full table rewrite or long locks depending on the engine, which is unsafe for large or production tables.'
-            )
-                ->identifier(self::RULE_IDENTIFIER)
-                ->build(),
+            RuleErrorBuilder::message(self::MESSAGE)
+            ->identifier(self::RULE_IDENTIFIER)
+            ->build(),
         ];
     }
 

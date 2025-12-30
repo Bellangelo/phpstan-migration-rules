@@ -17,7 +17,12 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidAfterRule extends PhinxRule
 {
-    private const string RULE_IDENTIFIER = 'phinx.addColumn.afterOptionForbidden';
+    private const string RULE_IDENTIFIER = 'phinx.schema.afterForbidden';
+
+    private const string MESSAGE =
+        'Forbidden: column positioning ("after"). '
+        . 'Reason: can trigger a full table rewrite or long locks depending on the engine. '
+        . 'Fix: avoid column ordering in migrations.';
 
     public function getNodeType(): string
     {
@@ -52,12 +57,9 @@ final class ForbidAfterRule extends PhinxRule
 
                 if ($key->value === 'after') {
                     return [
-                        RuleErrorBuilder::message(
-                            'Using the "after" column option in migrations is forbidden. '
-                            . 'It forces a full table rewrite, which is unsafe for large or production tables.'
-                        )
-                        ->identifier(self::RULE_IDENTIFIER)
-                        ->build(),
+                        RuleErrorBuilder::message(self::MESSAGE)
+                            ->identifier(self::RULE_IDENTIFIER)
+                            ->build(),
                     ];
                 }
             }

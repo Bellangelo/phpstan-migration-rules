@@ -24,7 +24,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/ForbidAfter.php'],
             [
                 [
-                    'Using "after()" in migrations is forbidden. It forces a full table rewrite or long locks depending on the engine, which is unsafe for large or production tables.',
+                    'Forbidden: column positioning ("after"). Reason: can trigger a full table rewrite or long locks depending on the engine. Fix: avoid column ordering in migrations.',
                     17,
                 ],
                 [
@@ -41,7 +41,7 @@ final class ForbidAfterRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/ForbidAfterInCreate.php'],
             [
                 [
-                    'Using "after()" in migrations is forbidden. It forces a full table rewrite or long locks depending on the engine, which is unsafe for large or production tables.',
+                    'Forbidden: column positioning ("after"). Reason: can trigger a full table rewrite or long locks depending on the engine. Fix: avoid column ordering in migrations.',
                     16,
                 ],
             ]
