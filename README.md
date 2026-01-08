@@ -65,3 +65,17 @@ Ensures each migration creates at most one table.
 |---|---|
 | [Phinx](./src/Rules/Phinx/ForbidMultipleTableCreationsRule.php) | Multiple calls to `create()` on table instances |
 | [Laravel](./src/Rules/Laravel/ForbidMultipleTableCreationsRule.php) | Multiple `Schema::create()` calls in the same migration |
+
+---
+
+### Rule: `NoDownMethodRule`
+Forbids the usage of the `down` method in migrations.
+> Useful for teams that prefer forward-only migrations or rely solely on the `change` method for extensive rollback support where possible.
+
+#### Support
+
+| Framework | Forbidden usage |
+|---|---|
+| [Phinx](./src/Rules/Phinx/NoDownMethodRule.php) | `public function down(): void` |
+| [Laravel](./src/Rules/Laravel/NoDownMethodRule.php) | `public function down(): void` |
+

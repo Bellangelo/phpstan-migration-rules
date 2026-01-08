@@ -41,3 +41,13 @@ services:
         class: PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule
         tags:
             - phpstan.rules.rule
+
+    -
+        class: PhpStanMigrationRules\Rules\Laravel\NoDownMethodRule
+        tags:
+            - phpstan.rules.rule
+
+    -
+        class: PhpStanMigrationRules\Rules\Phinx\NoDownMethodRule
+        tags:
+            - phpstan.rules.rule
