@@ -23,9 +23,9 @@ final class ForbidMultipleTableCreationsRule extends PhinxRule
         . 'Fix: split into one migration per table.';
 
     /**
-     * @var array<string, int>
+     * @var array<string, array<string, true>>
      */
-    private array $tableCallsPerClass = [];
+    private array $tableNamesPerClass = [];
 
     public function getNodeType(): string
     {
@@ -42,15 +42,20 @@ final class ForbidMultipleTableCreationsRule extends PhinxRule
             return [];
         }
 
+        $tableName = $this->extractTableName($node);
+        if ($tableName === null) {
+            return [];
+        }
+
         $classReflection = $scope->getClassReflection();
         if ($classReflection === null) {
             return [];
         }
 
         $className = $classReflection->getName();
-        $this->tableCallsPerClass[$className] = ($this->tableCallsPerClass[$className] ?? 0) + 1;
+        $this->tableNamesPerClass[$className][$tableName] = true;
 
-        if ($this->tableCallsPerClass[$className] > 1) {
+        if (count($this->tableNamesPerClass[$className]) > 1) {
             return [
                 RuleErrorBuilder::message(self::MESSAGE)
                     ->identifier(self::RULE_IDENTIFIER)
@@ -65,5 +70,23 @@ final class ForbidMultipleTableCreationsRule extends PhinxRule
     {
         return $node->name instanceof Identifier
             && $node->name->toString() === 'table';
+    }
+
+    private function extractTableName(MethodCall $node): ?string
+    {
+        if (count($node->args) === 0) {
+            return null;
+        }
+
+        $firstArg = $node->args[0];
+        if (!$firstArg instanceof Node\Arg) {
+            return null;
+        }
+
+        if ($firstArg->value instanceof Node\Scalar\String_) {
+            return $firstArg->value->value;
+        }
+
+        return null;
     }
 }

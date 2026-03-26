@@ -39,6 +39,14 @@ final class ForbidMultipleTableCreationsRuleTest extends RuleTestCase
         );
     }
 
+    public function testAllowsSameTableReferencedMultipleTimes(): void
+    {
+        $this->analyse(
+            [__DIR__ . '/fixtures/SameTableMultipleReferences.php'],
+            []
+        );
+    }
+
     public function testDoesNotReportOutsidePhinxMigration(): void
     {
         $this->analyse(
