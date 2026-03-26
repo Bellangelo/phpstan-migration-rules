@@ -121,4 +121,19 @@ final class EnforceCollationRuleTest extends RuleTestCase
             []
         );
     }
+
+    public function testMixedTableExistenceCheckAndCreateOnlyReportsCreate(): void
+    {
+        $this->analyse(
+            [
+                __DIR__ . '/fixtures/MixedTableCheckAndCreate.php',
+            ],
+            [
+                [
+                    'Required: table collation must be "utf8". Why: prevents environment-dependent defaults and keeps schema consistent. Fix: set the table collation explicitly in the migration.',
+                    14,
+                ],
+            ]
+        );
+    }
 }
