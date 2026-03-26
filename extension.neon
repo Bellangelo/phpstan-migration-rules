@@ -27,23 +27,17 @@ parameters:
 
 conditionalTags:
     PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule:
-        phpstan.rules.rule:
-            condition: %migrationRules.phinx.enforceCollation%
+        phpstan.rules.rule: %migrationRules.phinx.enforceCollation%
     PhpStanMigrationRules\Rules\Phinx\ForbidAfterRule:
-        phpstan.rules.rule:
-            condition: %migrationRules.phinx.forbidAfter%
+        phpstan.rules.rule: %migrationRules.phinx.forbidAfter%
     PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule:
-        phpstan.rules.rule:
-            condition: %migrationRules.phinx.forbidMultipleTableCreations%
+        phpstan.rules.rule: %migrationRules.phinx.forbidMultipleTableCreations%
     PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule:
-        phpstan.rules.rule:
-            condition: %migrationRules.laravel.enforceCollation%
+        phpstan.rules.rule: %migrationRules.laravel.enforceCollation%
     PhpStanMigrationRules\Rules\Laravel\ForbidAfterRule:
-        phpstan.rules.rule:
-            condition: %migrationRules.laravel.forbidAfter%
+        phpstan.rules.rule: %migrationRules.laravel.forbidAfter%
     PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule:
-        phpstan.rules.rule:
-            condition: %migrationRules.laravel.forbidMultipleTableCreations%
+        phpstan.rules.rule: %migrationRules.laravel.forbidMultipleTableCreations%
 
 services:
     -
