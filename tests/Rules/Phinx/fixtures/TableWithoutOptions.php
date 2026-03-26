@@ -10,6 +10,6 @@ final class TableWithoutOptions extends AbstractMigration
 {
     public function change(): void
     {
-        $this->table('users');
+        $this->table('users')->create();
     }
 }

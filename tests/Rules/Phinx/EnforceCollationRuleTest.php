@@ -111,4 +111,14 @@ final class EnforceCollationRuleTest extends RuleTestCase
             []
         );
     }
+
+    public function testExistingTableUsageIsIgnored(): void
+    {
+        $this->analyse(
+            [
+                __DIR__ . '/fixtures/ExistingTableUsage.php',
+            ],
+            []
+        );
+    }
 }

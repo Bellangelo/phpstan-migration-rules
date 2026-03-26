@@ -13,6 +13,6 @@ final class TableWithoutCollationKey extends AbstractMigration
         $this->table('users', [
             'id' => false,
             'primary_key' => 'id',
-        ]);
+        ])->create();
     }
 }
