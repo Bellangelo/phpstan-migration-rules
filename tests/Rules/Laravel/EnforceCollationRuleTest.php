@@ -81,4 +81,25 @@ final class EnforceCollationRuleTest extends RuleTestCase
             ],
         );
     }
+
+    public function testTableUsageIsIgnored(): void
+    {
+        $this->analyse(
+            [__DIR__ . '/fixtures/TableUsageWithoutCollation.php'],
+            []
+        );
+    }
+
+    public function testMixedExistenceCheckAndCreateOnlyReportsCreate(): void
+    {
+        $this->analyse(
+            [__DIR__ . '/fixtures/MixedTableCheckAndCreate.php'],
+            [
+                [
+                    'Required: table collation must be "utf8mb4". Why: prevents environment-dependent defaults and keeps schema consistent. Fix: set the table collation explicitly in the migration.',
+                    16,
+                ],
+            ]
+        );
+    }
 }
