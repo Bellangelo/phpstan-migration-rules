@@ -5,12 +5,14 @@ parametersSchema:
             enforceCollation: bool()
             forbidAfter: bool()
             forbidEnumColumn: bool()
+            forbidRawSql: bool()
             forbidMultipleTableCreations: bool()
         ])
         laravel: structure([
             enforceCollation: bool()
             forbidAfter: bool()
             forbidEnumColumn: bool()
+            forbidRawSql: bool()
             forbidMultipleTableCreations: bool()
         ])
     ])
@@ -22,11 +24,13 @@ parameters:
             enforceCollation: true
             forbidAfter: true
             forbidEnumColumn: false
+            forbidRawSql: false
             forbidMultipleTableCreations: true
         laravel:
             enforceCollation: true
             forbidAfter: true
             forbidEnumColumn: false
+            forbidRawSql: false
             forbidMultipleTableCreations: true
 
 conditionalTags:
@@ -36,6 +40,8 @@ conditionalTags:
         phpstan.rules.rule: %migrationRules.phinx.forbidAfter%
     PhpStanMigrationRules\Rules\Phinx\ForbidEnumColumnRule:
         phpstan.rules.rule: %migrationRules.phinx.forbidEnumColumn%
+    PhpStanMigrationRules\Rules\Phinx\ForbidRawSqlRule:
+        phpstan.rules.rule: %migrationRules.phinx.forbidRawSql%
     PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule:
         phpstan.rules.rule: %migrationRules.phinx.forbidMultipleTableCreations%
     PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule:
@@ -44,6 +50,8 @@ conditionalTags:
         phpstan.rules.rule: %migrationRules.laravel.forbidAfter%
     PhpStanMigrationRules\Rules\Laravel\ForbidEnumColumnRule:
         phpstan.rules.rule: %migrationRules.laravel.forbidEnumColumn%
+    PhpStanMigrationRules\Rules\Laravel\ForbidRawSqlRule:
+        phpstan.rules.rule: %migrationRules.laravel.forbidRawSql%
     PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule:
         phpstan.rules.rule: %migrationRules.laravel.forbidMultipleTableCreations%
 
@@ -60,6 +68,9 @@ services:
         class: PhpStanMigrationRules\Rules\Phinx\ForbidEnumColumnRule
 
     -
+        class: PhpStanMigrationRules\Rules\Phinx\ForbidRawSqlRule
+
+    -
         class: PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule
 
     -
@@ -72,6 +83,9 @@ services:
 
     -
         class: PhpStanMigrationRules\Rules\Laravel\ForbidEnumColumnRule
+
+    -
+        class: PhpStanMigrationRules\Rules\Laravel\ForbidRawSqlRule
 
     -
         class: PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule

@@ -28,12 +28,14 @@ parameters:
             enforceCollation: true
             forbidAfter: true
             forbidEnumColumn: true
+            forbidRawSql: true
             forbidMultipleTableCreations: true
 
         laravel:
             enforceCollation: true
             forbidAfter: true
             forbidEnumColumn: true
+            forbidRawSql: true
             forbidMultipleTableCreations: true
 ```
 
@@ -46,6 +48,7 @@ parameters:
             enforceCollation: false
             forbidAfter: false
             forbidEnumColumn: false
+            forbidRawSql: false
             forbidMultipleTableCreations: false
 ```
 
@@ -83,6 +86,17 @@ Forbids the use of `enum` column types in migrations.
 |---|---|
 | [Phinx](./src/Rules/Phinx/ForbidEnumColumnRule.php) | `addColumn('col', 'enum', ['values' => [...]])` |
 | [Laravel](./src/Rules/Laravel/ForbidEnumColumnRule.php) | `$table->enum('col', [...])` |
+
+---
+
+### Rule: `ForbidRawSqlRule`
+Forbids raw SQL execution inside migrations.
+> Raw SQL bypasses the schema builder, making migrations harder to review, less portable, and prone to errors.
+
+| Framework | Forbidden usage |
+|---|---|
+| [Phinx](./src/Rules/Phinx/ForbidRawSqlRule.php) | `$this->execute('...')`, `$this->query('...')` |
+| [Laravel](./src/Rules/Laravel/ForbidRawSqlRule.php) | `DB::statement('...')`, `DB::unprepared('...')` |
 
 ---
 

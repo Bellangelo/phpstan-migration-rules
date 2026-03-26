@@ -7,10 +7,12 @@ namespace PhpStanMigrationRules\Tests;
 use PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule as LaravelEnforceCollationRule;
 use PhpStanMigrationRules\Rules\Laravel\ForbidAfterRule as LaravelForbidAfterRule;
 use PhpStanMigrationRules\Rules\Laravel\ForbidEnumColumnRule as LaravelForbidEnumColumnRule;
+use PhpStanMigrationRules\Rules\Laravel\ForbidRawSqlRule as LaravelForbidRawSqlRule;
 use PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule as LaravelForbidMultipleTableCreationsRule;
 use PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule as PhinxEnforceCollationRule;
 use PhpStanMigrationRules\Rules\Phinx\ForbidAfterRule as PhinxForbidAfterRule;
 use PhpStanMigrationRules\Rules\Phinx\ForbidEnumColumnRule as PhinxForbidEnumColumnRule;
+use PhpStanMigrationRules\Rules\Phinx\ForbidRawSqlRule as PhinxForbidRawSqlRule;
 use PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule as PhinxForbidMultipleTableCreationsRule;
 use PHPStan\DependencyInjection\Container;
 use PHPStan\Rules\Rule;
@@ -22,16 +24,20 @@ final class ExtensionConfigurationTest extends PHPStanTestCase
         PhinxEnforceCollationRule::class,
         PhinxForbidAfterRule::class,
         PhinxForbidEnumColumnRule::class,
+        PhinxForbidRawSqlRule::class,
         PhinxForbidMultipleTableCreationsRule::class,
         LaravelEnforceCollationRule::class,
         LaravelForbidAfterRule::class,
         LaravelForbidEnumColumnRule::class,
+        LaravelForbidRawSqlRule::class,
         LaravelForbidMultipleTableCreationsRule::class,
     ];
 
     private const array DEFAULT_DISABLED_RULE_CLASSES = [
         PhinxForbidEnumColumnRule::class,
+        PhinxForbidRawSqlRule::class,
         LaravelForbidEnumColumnRule::class,
+        LaravelForbidRawSqlRule::class,
     ];
 
     public static function getAdditionalConfigFiles(): array
@@ -115,11 +121,13 @@ final class ExtensionConfigurationTest extends PHPStanTestCase
         self::assertTrue($parameters['phinx']['enforceCollation']);
         self::assertTrue($parameters['phinx']['forbidAfter']);
         self::assertFalse($parameters['phinx']['forbidEnumColumn']);
+        self::assertFalse($parameters['phinx']['forbidRawSql']);
         self::assertTrue($parameters['phinx']['forbidMultipleTableCreations']);
 
         self::assertTrue($parameters['laravel']['enforceCollation']);
         self::assertTrue($parameters['laravel']['forbidAfter']);
         self::assertFalse($parameters['laravel']['forbidEnumColumn']);
+        self::assertFalse($parameters['laravel']['forbidRawSql']);
         self::assertTrue($parameters['laravel']['forbidMultipleTableCreations']);
     }
 }
