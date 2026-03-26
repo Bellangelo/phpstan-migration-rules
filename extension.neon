@@ -1,43 +1,69 @@
 parametersSchema:
-    phpstanMigrationRules: structure([
+    migrationRules: structure([
         requiredCollation: string()
+        phinx: structure([
+            enforceCollation: bool()
+            forbidAfter: bool()
+            forbidMultipleTableCreations: bool()
+        ])
+        laravel: structure([
+            enforceCollation: bool()
+            forbidAfter: bool()
+            forbidMultipleTableCreations: bool()
+        ])
     ])
 
 parameters:
-    phpstanMigrationRules:
+    migrationRules:
         requiredCollation: utf8
+        phinx:
+            enforceCollation: true
+            forbidAfter: true
+            forbidMultipleTableCreations: true
+        laravel:
+            enforceCollation: true
+            forbidAfter: true
+            forbidMultipleTableCreations: true
+
+conditionalTags:
+    PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule:
+        phpstan.rules.rule:
+            condition: %migrationRules.phinx.enforceCollation%
+    PhpStanMigrationRules\Rules\Phinx\ForbidAfterRule:
+        phpstan.rules.rule:
+            condition: %migrationRules.phinx.forbidAfter%
+    PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule:
+        phpstan.rules.rule:
+            condition: %migrationRules.phinx.forbidMultipleTableCreations%
+    PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule:
+        phpstan.rules.rule:
+            condition: %migrationRules.laravel.enforceCollation%
+    PhpStanMigrationRules\Rules\Laravel\ForbidAfterRule:
+        phpstan.rules.rule:
+            condition: %migrationRules.laravel.forbidAfter%
+    PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule:
+        phpstan.rules.rule:
+            condition: %migrationRules.laravel.forbidMultipleTableCreations%
 
 services:
     -
         class: PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule
         arguments:
-            requiredCollation: %phpstanMigrationRules.requiredCollation%
-        tags:
-            - phpstan.rules.rule
+            requiredCollation: %migrationRules.requiredCollation%
 
     -
         class: PhpStanMigrationRules\Rules\Phinx\ForbidAfterRule
-        tags:
-            - phpstan.rules.rule
 
     -
         class: PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule
-        tags:
-            - phpstan.rules.rule
 
     -
         class: PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule
         arguments:
-            requiredCollation: %phpstanMigrationRules.requiredCollation%
-        tags:
-            - phpstan.rules.rule
+            requiredCollation: %migrationRules.requiredCollation%
 
     -
         class: PhpStanMigrationRules\Rules\Laravel\ForbidAfterRule
-        tags:
-            - phpstan.rules.rule
 
     -
         class: PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule
-        tags:
-            - phpstan.rules.rule
