@@ -15,9 +15,15 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidMultipleTableCreationsRule extends PhinxRule
 {
-    private const string RULE_IDENTIFIER = 'phinx.schema.multipleTableCreationsForbidden';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'phinx.schema.multipleTableCreationsForbidden';
 
-    private const string MESSAGE =
+    /**
+     * @var string
+     */
+    private const MESSAGE =
         'Forbidden: creating multiple tables in a single migration. '
         . 'Why: reduces reviewability and rollback safety. '
         . 'Fix: split into one migration per table.';
