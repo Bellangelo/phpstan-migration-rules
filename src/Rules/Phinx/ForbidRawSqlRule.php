@@ -15,14 +15,23 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidRawSqlRule extends PhinxRule
 {
-    private const string RULE_IDENTIFIER = 'phinx.schema.rawSqlForbidden';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'phinx.schema.rawSqlForbidden';
 
-    private const string MESSAGE =
+    /**
+     * @var string
+     */
+    private const MESSAGE =
         'Forbidden: raw SQL via %s(). '
         . 'Why: raw SQL bypasses the schema builder, making migrations harder to review, less portable, and prone to errors. '
         . 'Fix: use Phinx schema builder methods instead.';
 
-    private const array FORBIDDEN_METHODS = ['execute', 'query'];
+    /**
+     * @var mixed[]
+     */
+    private const FORBIDDEN_METHODS = ['execute', 'query'];
 
     public function getNodeType(): string
     {

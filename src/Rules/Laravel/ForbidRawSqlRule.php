@@ -16,14 +16,23 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidRawSqlRule extends LaravelRule
 {
-    private const string RULE_IDENTIFIER = 'laravel.schema.rawSqlForbidden';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'laravel.schema.rawSqlForbidden';
 
-    private const string MESSAGE =
+    /**
+     * @var string
+     */
+    private const MESSAGE =
         'Forbidden: raw SQL via DB::%s(). '
         . 'Why: raw SQL bypasses the schema builder, making migrations harder to review, less portable, and prone to errors. '
         . 'Fix: use Laravel schema builder methods instead.';
 
-    private const array FORBIDDEN_METHODS = ['statement', 'unprepared'];
+    /**
+     * @var mixed[]
+     */
+    private const FORBIDDEN_METHODS = ['statement', 'unprepared'];
 
     public function getNodeType(): string
     {
