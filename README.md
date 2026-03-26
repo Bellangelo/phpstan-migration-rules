@@ -27,11 +27,13 @@ parameters:
         phinx:
             enforceCollation: true
             forbidAfter: true
+            forbidEnumColumn: true
             forbidMultipleTableCreations: true
 
         laravel:
             enforceCollation: true
             forbidAfter: true
+            forbidEnumColumn: true
             forbidMultipleTableCreations: true
 ```
 
@@ -43,6 +45,7 @@ parameters:
         phinx:
             enforceCollation: false
             forbidAfter: false
+            forbidEnumColumn: false
             forbidMultipleTableCreations: false
 ```
 
@@ -69,6 +72,17 @@ Forbids column positioning via `after`.
 |---|---|
 | [Phinx](./src/Rules/Phinx/ForbidAfterRule.php) | `addColumn(..., ['after' => 'column'])` |
 | [Laravel](./src/Rules/Laravel/ForbidAfterRule.php) | `$table->string('x')->after('y')` |
+
+---
+
+### Rule: `ForbidEnumColumnRule`
+Forbids the use of `enum` column types in migrations.
+> Modifying enum values requires a full `ALTER TABLE`, which can cause long locks on large tables. Use a string column with application-level validation instead.
+
+| Framework | Forbidden usage |
+|---|---|
+| [Phinx](./src/Rules/Phinx/ForbidEnumColumnRule.php) | `addColumn('col', 'enum', ['values' => [...]])` |
+| [Laravel](./src/Rules/Laravel/ForbidEnumColumnRule.php) | `$table->enum('col', [...])` |
 
 ---
 
