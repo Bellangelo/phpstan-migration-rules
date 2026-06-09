@@ -6,11 +6,12 @@ namespace PhpStanMigrationRules\Tests\Rules\Phinx\Fixtures;
 
 use Phinx\Migration\AbstractMigration;
 
-final class TableWithNonArrayOptions extends AbstractMigration
+final class MixedTableCheckAndCreate extends AbstractMigration
 {
     public function change(): void
     {
-        /** @phpstan-ignore argument.type */
-        $this->table('users', 'not-an-array')->create();
+        if (!$this->hasTable('users')) {
+            $this->table('users')->create();
+        }
     }
 }

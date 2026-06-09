@@ -24,9 +24,8 @@ final class NoDownMethodRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/NoDownMethod.php'],
             [
                 [
-                    'Forbidden: "down" method. Use "change" method for reversible migrations, or forward-only migrations.',
+                    'Forbidden: "down" method. Why: a "down" method enables rollbacks, which can cause data loss and break forward-only migration strategies. Fix: use the "change" method for reversible migrations, or omit the rollback path entirely.',
                     11,
-                    'If you must rollback, consider creating a new migration that reverses these changes.',
                 ],
             ]
         );
@@ -38,9 +37,8 @@ final class NoDownMethodRuleTest extends RuleTestCase
             [__DIR__ . '/fixtures/NoDownMethodAnonymous.php'],
             [
                 [
-                    'Forbidden: "down" method. Use "change" method for reversible migrations, or forward-only migrations.',
+                    'Forbidden: "down" method. Why: a "down" method enables rollbacks, which can cause data loss and break forward-only migration strategies. Fix: use the "change" method for reversible migrations, or omit the rollback path entirely.',
                     11,
-                    'If you must rollback, consider creating a new migration that reverses these changes.',
                 ],
             ]
         );

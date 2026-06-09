@@ -46,11 +46,16 @@ final class EnforceCollationRule extends PhinxRule
         }
 
         $methodName = $node->name instanceof Node\Identifier ? $node->name->toString() : null;
-        if ($methodName !== 'table') {
+        if ($methodName !== 'create') {
             return [];
         }
 
-        return $this->validateTableMethod($node, $scope);
+        $tableCall = $this->findTableCallInCreateChain($node);
+        if (!$tableCall instanceof MethodCall) {
+            return [];
+        }
+
+        return $this->validateTableMethod($tableCall, $scope);
     }
 
     /**
@@ -134,5 +139,20 @@ final class EnforceCollationRule extends PhinxRule
         }
 
         return $constants[0]->getValue();
+    }
+
+    private function findTableCallInCreateChain(MethodCall $node): ?MethodCall
+    {
+        $current = $node->var;
+
+        while ($current instanceof MethodCall) {
+            if ($current->name instanceof Node\Identifier && $current->name->toString() === 'table') {
+                return $current;
+            }
+
+            $current = $current->var;
+        }
+
+        return null;
     }
 }

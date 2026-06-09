@@ -16,7 +16,10 @@ final class NoDownMethodRule extends PhinxRule
 {
     private const string RULE_IDENTIFIER = 'phinx.schema.noDownMethod';
 
-    private const string MESSAGE = 'Forbidden: "down" method. Use "change" method for reversible migrations, or forward-only migrations.';
+    private const string MESSAGE =
+        'Forbidden: "down" method. '
+        . 'Why: a "down" method enables rollbacks, which can cause data loss and break forward-only migration strategies. '
+        . 'Fix: use the "change" method for reversible migrations, or omit the rollback path entirely.';
 
     public function getNodeType(): string
     {
@@ -40,7 +43,6 @@ final class NoDownMethodRule extends PhinxRule
         return [
             RuleErrorBuilder::message(self::MESSAGE)
                 ->identifier(self::RULE_IDENTIFIER)
-                ->tip('If you must rollback, consider creating a new migration that reverses these changes.')
                 ->build(),
         ];
     }

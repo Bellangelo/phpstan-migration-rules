@@ -54,7 +54,7 @@ final class EnforceCollationRule extends LaravelRule
         }
 
         $callName = $this->getStaticCallName($node);
-        if ($callName !== 'create' && $callName !== 'table') {
+        if ($callName !== 'create') {
             return [];
         }
 

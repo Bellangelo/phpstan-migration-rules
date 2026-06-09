@@ -12,6 +12,6 @@ final class TableWithWrongCollation extends AbstractMigration
     {
         $this->table('users', [
             'collation' => 'utf8mb4_unicode_ci',
-        ]);
+        ])->create();
     }
 }
