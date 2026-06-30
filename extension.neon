@@ -7,6 +7,7 @@ parametersSchema:
             forbidEnumColumn: bool()
             forbidRawSql: bool()
             forbidMultipleTableCreations: bool()
+            forbidDown: bool()
         ])
         laravel: structure([
             enforceCollation: bool()
@@ -14,6 +15,7 @@ parametersSchema:
             forbidEnumColumn: bool()
             forbidRawSql: bool()
             forbidMultipleTableCreations: bool()
+            forbidDown: bool()
         ])
     ])
 
@@ -26,12 +28,14 @@ parameters:
             forbidEnumColumn: false
             forbidRawSql: false
             forbidMultipleTableCreations: true
+            forbidDown: false
         laravel:
             enforceCollation: true
             forbidAfter: true
             forbidEnumColumn: false
             forbidRawSql: false
             forbidMultipleTableCreations: true
+            forbidDown: false
 
 conditionalTags:
     PhpStanMigrationRules\Rules\Phinx\EnforceCollationRule:
@@ -44,6 +48,8 @@ conditionalTags:
         phpstan.rules.rule: %migrationRules.phinx.forbidRawSql%
     PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule:
         phpstan.rules.rule: %migrationRules.phinx.forbidMultipleTableCreations%
+    PhpStanMigrationRules\Rules\Phinx\NoDownMethodRule:
+        phpstan.rules.rule: %migrationRules.phinx.forbidDown%
     PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule:
         phpstan.rules.rule: %migrationRules.laravel.enforceCollation%
     PhpStanMigrationRules\Rules\Laravel\ForbidAfterRule:
@@ -54,6 +60,8 @@ conditionalTags:
         phpstan.rules.rule: %migrationRules.laravel.forbidRawSql%
     PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule:
         phpstan.rules.rule: %migrationRules.laravel.forbidMultipleTableCreations%
+    PhpStanMigrationRules\Rules\Laravel\NoDownMethodRule:
+        phpstan.rules.rule: %migrationRules.laravel.forbidDown%
 
 services:
     -
@@ -74,6 +82,9 @@ services:
         class: PhpStanMigrationRules\Rules\Phinx\ForbidMultipleTableCreationsRule
 
     -
+        class: PhpStanMigrationRules\Rules\Phinx\NoDownMethodRule
+
+    -
         class: PhpStanMigrationRules\Rules\Laravel\EnforceCollationRule
         arguments:
             requiredCollation: %migrationRules.requiredCollation%
@@ -89,3 +100,6 @@ services:
 
     -
         class: PhpStanMigrationRules\Rules\Laravel\ForbidMultipleTableCreationsRule
+
+    -
+        class: PhpStanMigrationRules\Rules\Laravel\NoDownMethodRule
