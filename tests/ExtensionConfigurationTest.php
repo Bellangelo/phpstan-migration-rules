@@ -20,7 +20,10 @@ use PHPStan\Testing\PHPStanTestCase;
 
 final class ExtensionConfigurationTest extends PHPStanTestCase
 {
-    private const array ALL_RULE_CLASSES = [
+    /**
+     * @var mixed[]
+     */
+    private const ALL_RULE_CLASSES = [
         PhinxEnforceCollationRule::class,
         PhinxForbidAfterRule::class,
         PhinxForbidEnumColumnRule::class,
@@ -33,7 +36,10 @@ final class ExtensionConfigurationTest extends PHPStanTestCase
         LaravelForbidMultipleTableCreationsRule::class,
     ];
 
-    private const array DEFAULT_DISABLED_RULE_CLASSES = [
+    /**
+     * @var mixed[]
+     */
+    private const DEFAULT_DISABLED_RULE_CLASSES = [
         PhinxForbidEnumColumnRule::class,
         PhinxForbidRawSqlRule::class,
         LaravelForbidEnumColumnRule::class,
@@ -74,7 +80,7 @@ final class ExtensionConfigurationTest extends PHPStanTestCase
         $taggedClasses = [];
         foreach ($taggedServices as $service) {
             self::assertIsObject($service);
-            $taggedClasses[] = $service::class;
+            $taggedClasses[] = get_class($service);
         }
 
         foreach (self::ALL_RULE_CLASSES as $ruleClass) {
@@ -104,7 +110,7 @@ final class ExtensionConfigurationTest extends PHPStanTestCase
             self::assertInstanceOf(
                 Rule::class,
                 $service,
-                sprintf('%s does not implement Rule interface.', $service::class),
+                sprintf('%s does not implement Rule interface.', get_class($service)),
             );
         }
     }

@@ -14,9 +14,15 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class NoDownMethodRule extends PhinxRule
 {
-    private const string RULE_IDENTIFIER = 'phinx.schema.noDownMethod';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'phinx.schema.noDownMethod';
 
-    private const string MESSAGE =
+    /**
+     * @var string
+     */
+    private const MESSAGE =
         'Forbidden: "down" method. '
         . 'Why: a "down" method enables rollbacks, which can cause data loss and break forward-only migration strategies. '
         . 'Fix: use the "change" method for reversible migrations, or omit the rollback path entirely.';

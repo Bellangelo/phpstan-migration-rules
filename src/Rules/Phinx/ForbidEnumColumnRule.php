@@ -16,9 +16,15 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ForbidEnumColumnRule extends PhinxRule
 {
-    private const string RULE_IDENTIFIER = 'phinx.schema.enumColumnForbidden';
+    /**
+     * @var string
+     */
+    private const RULE_IDENTIFIER = 'phinx.schema.enumColumnForbidden';
 
-    private const string MESSAGE =
+    /**
+     * @var string
+     */
+    private const MESSAGE =
         'Forbidden: enum column type. '
         . 'Why: adding or removing enum values requires a full ALTER TABLE, which can cause long locks on large tables. '
         . 'Fix: use a string column with application-level validation instead.';
